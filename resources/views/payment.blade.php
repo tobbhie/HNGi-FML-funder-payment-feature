@@ -41,13 +41,14 @@
                 <div class="alert alert-danger d-none" style="padding: 0.5rem 1rem;" id="alert" role="alert">
                     <p class="my-0" id="alertMessage"></p>
                 </div>
-                <form class="payment-form d-flex flex-column p-4" method="POST" novalidate>
+            <form action="{{route('campaign/pay')}}" class="payment-form d-flex flex-column p-4" method="POST" novalidate>
+                @csrf
                     <div class="form-group mb-4">
                         <label class="form__label" for="amount">Amount</label>
                         <div class="input-group">
                             <span class="input-group-text" id="selectedCurrency">&#x20A6;</span>
-                            <input class="form-control form-control-lg form__input" type="number" id="amount"
-                                   placeholder="Enter Amount to Donate">
+                            <input name="amount" class="form-control form-control-lg form__input" type="number" id="amount"
+                                   placeholder="Enter Amount to Donate" required>
                             <select class="input-group-text" id="chooseCurrency">
                                 <option value="NGN" selected>NGN</option>
                                 <option value="USD">USD</option>
@@ -60,7 +61,7 @@
 
                     <div class="form-group mb-2">
                         <label class="form__label" for="fullName">Full Name</label>
-                        <input class="form-control form-control-lg form__input" type="text" id="fullName"
+                        <input name="first_name" class="form-control form-control-lg form__input" type="text" id="fullName"
                                value="{{ $user->firstName }} {{ $user->lasttName }}">
                         <div class="invalid-feedback"></div>
                     </div>
@@ -73,42 +74,30 @@
 
                     <div class="form-group mb-4">
                         <label class="form__label" for="email">Email Address</label>
-                        <input class="form-control form-control-lg form__input" type="email" id="email"
+                        <input name="email" class="form-control form-control-lg form__input" type="email" id="email"
                                value="{{ $user->email }}" disabled>
                         <div class="invalid-feedback"></div>
                     </div>
+                    <input type="hidden" name="quantity" value="1">
+                    <input type="hidden" name="email" value="{{ $user->email }}">
+                    <input id="orderid" type="hidden" name="orderID">
+                    <input type="hidden" name="metadata" value="{{ json_encode($array = ['key_name' => 'value',]) }}" >
+                    <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}">
 
 
                     <!-- <h3>Select Payment Method</h3> -->
-
-                    <h2 class="my-3">Card Details</h2>
-
-                    <div class="form-group">
-                        <label class="form__label" for="cardNumber">Card Number</label>
-                        <input class="form-control form-control-lg form__input" type="number" id="cardNumber"
-                               placeholder="Enter card number">
-                        <div class="invalid-feedback"></div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-6 form-group my-2">
-                            <label class="form__label" for="expirationDate">Expiration Date</label>
-                            <input class="form-control form-control-lg form__input" type="text" id="expirationDate"
-                                   placeholder="mm/yyyy">
-                            <div class="invalid-feedback"></div>
-                        </div>
-
-                        <div class="col-sm-6 form-group my-2">
-                            <label class="form__label" for="cvv">CVV</label>
-                            <input class="form-control form-control-lg form__input" type="number" id="cvv" placeholder="Enter CVV">
-                            <div class="invalid-feedback"></div>
-                        </div>
-                    </div>
 
                     <button class="btn btn-danger btn-lg mx-auto btn-block my-4 form__button" type="submit">Pay &#x20A6;</button>
                 </form>
             </div>
         </div>
     </div>
+
+    <script>
+        const orderId = document.getElementById('orderid');
+
+        orderId.value = Math.floor(Math.random()*10000001);
+
+    </script>
 
 @endsection
