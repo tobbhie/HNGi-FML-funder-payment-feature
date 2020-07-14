@@ -9,7 +9,7 @@ use Validator;
 use Paystack;
 use App\Transaction;
 use App\User;
-use Session;
+
 
 
 class InvestController extends Controller
