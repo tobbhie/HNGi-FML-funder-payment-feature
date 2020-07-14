@@ -42,11 +42,7 @@ class InvestController extends Controller
 
         if (!$validator->fails()) {
             return Paystack::getAuthorizationUrl()->redirectNow();
-        }
-        else{
-            return redirect()->route('campaign')->withErrors($validator);
-        }
-        
+        }        
     }
 
     /**
