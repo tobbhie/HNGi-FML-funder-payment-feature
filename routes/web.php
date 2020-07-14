@@ -24,4 +24,8 @@ Auth::routes();
 Route::get('campaign', 'HomeController@index')->name('home');
 Route::get('campaign/{id}', 'RequestController@show')->name('campaign');
 Route::get('campaign/{id}/fund', 'InvestController@fund')->name('fund');
+Route::post('campaign/pay', 'InvestController@redirectToGateway')->name('campaign/pay');
+Route::get('campaign/pay/callback', 'InvestController@handleGatewayCallback');
+
+
 //Route::get('/home', 'HomeController@index')->name('home');
