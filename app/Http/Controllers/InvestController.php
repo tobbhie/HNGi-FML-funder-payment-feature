@@ -79,7 +79,7 @@ class InvestController extends Controller
                 'thanks' => 'Thank you for trusting fundmylaptop.com!',
             ];
 
-            $trans->notify(new sendPaymentDetailsEmail($details), 'boluakins@gmail.com');
+            $trans->notify(new sendPaymentDetailsEmail($details), $user->email);
 
             //dd($trans->notifications);
 
