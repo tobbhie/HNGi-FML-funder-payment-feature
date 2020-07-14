@@ -3,10 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Transaction extends Model
 {
-    //
+    use Notifiable;
+
     protected $table = 'transactions';
 
     protected $fillable = ['request_id','transaction_ref','amount','status','response_code'];

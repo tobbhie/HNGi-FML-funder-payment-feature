@@ -9,10 +9,10 @@
 
     <div class="container mx-auto mb-5" style="margin-top: 88px;">
         <header>
-            <h1 id="title" class="mt-5 mb-4">Fund John Doe's Laptop Purchase</h1>
+            <h1 id="title" class="mt-5 mb-4">Fund {{ $request->user->firstName }} {{ $request->user->lastName }}'s Laptop Purchase</h1>
 
             <h3 class="text-muted">Loan Amount</h3>
-            <p style="font-size: 2rem;"><strong>&#x20A6; 250,000</strong></p>
+            <p style="font-size: 2rem;"><strong>&#x20A6; {{ $request->amount }}</strong></p>
         </header>
         <div class="row">
             <div class="col-md-6 mt-4">
@@ -22,13 +22,13 @@
                     <!-- <iframe src="" frameborder="0"></iframe> -->
                 </div>
 
-                <p class="my-4" id="creationDate">Created July 16, 2020</p>
+                <p class="my-4" id="creationDate">{{ $request->created_at }}</p>
                 <hr>
 
                 <div class="user-info my-4">
                     <img src="../img/card-image (4).png" height="40px" width="40px" alt="user photo"
                          class="img-icon rounded-circle">
-                    <p class="m-0">John Doe</p>
+                    <p class="m-0">{{ $request->user->firstName }} {{ $request->user->lastName }}</p>
                 </div>
 
                 <div class="repayment-info">
@@ -41,14 +41,14 @@
                 <div class="alert alert-danger d-none" style="padding: 0.5rem 1rem;" id="alert" role="alert">
                     <p class="my-0" id="alertMessage"></p>
                 </div>
-            <form action="{{route('campaign/pay')}}" class="payment-form d-flex flex-column p-4" method="POST" novalidate>
+            <form action="{{ route('campaign/pay') }}" class="payment-form d-flex flex-column p-4" method="POST" novalidate>
                 @csrf
                     <div class="form-group mb-4">
                         <label class="form__label" for="amount">Amount</label>
                         <div class="input-group">
                             <span class="input-group-text" id="selectedCurrency">&#x20A6;</span>
                             <input name="amount" class="form-control form-control-lg form__input" type="number" id="amount"
-                                   placeholder="Enter Amount to Donate" required>
+                                   value="{{ $request->amount}}" required>
                             <select class="input-group-text" id="chooseCurrency">
                                 <option value="NGN" selected>NGN</option>
                                 <option value="USD">USD</option>
@@ -81,7 +81,7 @@
                     <input type="hidden" name="quantity" value="1">
                     <input type="hidden" name="email" value="{{ $user->email }}">
                     <input id="orderid" type="hidden" name="orderID">
-                    <input type="hidden" name="metadata" value="{{ json_encode($array = ['key_name' => 'value',]) }}" >
+                    <input type="hidden" name="metadata" value="{{ json_encode($metadata)}}" >
                     <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}">
 
 
