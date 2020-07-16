@@ -75,7 +75,7 @@ class InvestController extends Controller
         $request = FundRequest::where('id', $trans->request_id)->with('user')->first();
             $details = [
                 'greeting' => 'Hi ' . $user->firstName,
-                'body' => 'Your investment of ' . $trans->amount . 'in '. $request->user->firstName . '\'s campaign -' . url('/campaign/$trans->request_id'). '- has been acknowledged',
+                'body' => 'Your investment of ' . $trans->amount . 'in '. $request->user->firstName . '\'s campaign -' . url(`/campaign/$trans->request_id`). '- has been acknowledged',
                 'thanks' => 'Thank you for trusting fundmylaptop.com!',
             ];
 
